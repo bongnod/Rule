@@ -12,6 +12,9 @@
 # 成功）；这份放 GitHub raw 上，加载更稳，加完重载后看日志里规则一栏是否变成 Spotifast。
 # 更新：2026-11-13
 
+# --- 图片 CDN（日志里实际出现过 i.scdn.co，封面图）---
+DOMAIN, i.scdn.co
+
 # --- 音频 CDN（日志里实际出现过的，逐个点名）---
 DOMAIN, audio-cf.spotifycdn.com
 DOMAIN, audio-ak.spotifycdn.com
