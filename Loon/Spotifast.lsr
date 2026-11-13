@@ -1,0 +1,41 @@
+# Spotifast - Loon Rule Set
+# Spotifast（Mac 上 0.17.1，Rust 原生 Spotify 客户端，crmne/spotifast，播放走 librespot）
+# 用途：把 Spotifast 的流量单独拎出来走指定策略。域名取自本机 Spotifast 日志
+# （librespot dealer / audio key）与 Spotifast、librespot 源码里的端点。
+# 注意：你配置里已有的 Spotify.lsr（DOMAIN-SUFFIX, spotify.com / scdn.co）本来就
+# 覆盖了下面大部分域名；这份单独成表，是为了让你能给 Spotifast 指定不同的策略
+# （比如不想走香港自动策略时），以及点名 librespot 才用的几个端点。
+# Loon 里这样引用（策略可改成 DIRECT 或别的组）：
+# https://raw.githubusercontent.com/bongnod/Rule/main/Loon/Spotifast.lsr, policy=香港自动策略, tag=Spotifast, enabled=true
+# 本机日志里看到的症状（dealer websocket TLS 握手失败、Spotify 拒绝 audio key、
+# Made for you 读不到）：若加了规则仍不正常，先试把 Spotify.lpx 插件关掉再测——
+# 那个插件的 MITM 改写是冲着官方客户端去的，可能干扰 Spotifast 的 API 返回。
+# 更新：2026-11-13
+
+# --- librespot 接入点（Spotifast 播放必走；官方客户端不走这几个）---
+DOMAIN, apresolve.spotify.com
+DOMAIN, ap.spotify.com
+DOMAIN, dealer.spotify.com
+DOMAIN, spclient.wg.spotify.com
+
+# --- Spotify Web API / 账号 ---
+DOMAIN, api.spotify.com
+DOMAIN, api-partner.spotify.com
+DOMAIN, accounts.spotify.com
+DOMAIN, open.spotify.com
+DOMAIN, play.spotify.com
+DOMAIN, developer.spotify.com
+
+# --- 兜底：所有 spotify.com 子域名 ---
+DOMAIN-SUFFIX, spotify.com
+
+# --- 图片 / 音频 CDN ---
+DOMAIN-SUFFIX, scdn.co
+DOMAIN-SUFFIX, spotifycdn.com
+DOMAIN-SUFFIX, spotifycdn.net
+DOMAIN, audio-ak-spotify-com.akamaized.net
+DOMAIN, heads-ak-spotify-com.akamaized.net
+DOMAIN, spotify-com.akamaized.net
+
+# --- Spotifast 自身（官网 / 更新检查）---
+DOMAIN-SUFFIX, spotifast.rocks
